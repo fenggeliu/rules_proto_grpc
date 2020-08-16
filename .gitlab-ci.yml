@@ -1,0 +1,23 @@
+default:
+  image:
+    name: l.gcr.io/google/bazel:latest
+    entrypoint: [""]
+  before_script:
+  - echo "build --disk_cache=$CI_PROJECT_DIR/.cache" >> .bazelrc
+cache:
+  key: bazel_cache
+  paths:
+  - .cache/
+stages:
+- build
+- test
+- push
+build:
+  stage: build
+  script:
+  - bazel version
+  - bazel build ...
+test:
+  stage: test
+  script:
+  - bazel test ...
